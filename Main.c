@@ -76,7 +76,7 @@ int main()
 
 		
 		char name[128];
-		sprintf(name, "ppms/img%d.ppm", c++);
+		sprintf(name, "ppms/img0%03d.ppm", c++);
 		FILE* outputFile = fopen(name, "w+");
 
 		if (!outputFile)

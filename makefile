@@ -11,15 +11,22 @@ all: default
 run: default
 	./main
 
-render: run convert
+render: clean_imgs run wait convert
 
+wait:
+	sleep 0.5
+
+clean_imgs:
+	-rm pngs/*.png
+	-rm ppms/*.ppm
 
 IMAGES = $(patsubst ppms/%.ppm, pngs/%.png, $(wildcard ppms/*.ppm))
 
 convert: $(IMAGES)
+	ffmpeg -framerate 30 -pattern_type glob -i "pngs/*.png" -c:v libx264 -pix_fmt yuv420p out.mp4
 
 pngs/%.png: ppms/%.ppm
-	ffmpeg -i $< $@
+	ffmpeg -i $< $@ -y
 
 
 OBJECTS = $(patsubst %.c, %.o, $(wildcard *.c))
