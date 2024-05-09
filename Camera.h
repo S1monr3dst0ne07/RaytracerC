@@ -2,6 +2,7 @@
 #define CAMERA
 
 #include "Ray.h"
+#include "Config.h"
 
 struct camera
 {
@@ -9,14 +10,9 @@ struct camera
 	vec3 hori;
 	vec3 vert;
 	vec3 origin;
-
-
-
-
 };
 
-struct camera newCamByBasis(vec3 origin, vec3 u, vec3 v, float h);
-struct camera newCam(vec3 origin, vec3 dir);
+struct camera newCam(vec3 origin, vec3 destination, vec3 vup, float vfov, float aspect);
 ray getRay(struct camera* c, float u, float v);
 
 

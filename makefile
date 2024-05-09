@@ -14,7 +14,7 @@ run: default
 render: clean_imgs run wait convert
 
 wait:
-	sleep 0.5
+	sleep 3
 
 clean_imgs:
 	-rm pngs/*.png
@@ -23,7 +23,7 @@ clean_imgs:
 IMAGES = $(patsubst ppms/%.ppm, pngs/%.png, $(wildcard ppms/*.ppm))
 
 convert: $(IMAGES)
-	ffmpeg -framerate 30 -pattern_type glob -i "pngs/*.png" -c:v libx264 -pix_fmt yuv420p out.mp4
+	ffmpeg -framerate 30 -pattern_type glob -i "pngs/*.png" -c:v libx264 -pix_fmt yuv420p out.mp4 -y
 
 pngs/%.png: ppms/%.ppm
 	ffmpeg -i $< $@ -y

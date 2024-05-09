@@ -7,17 +7,12 @@
 
 #include "Material.h"
 #include "Camera.h"
+#include "Config.h"
 
 #ifdef _WIN32
 	#pragma warning (disable : 4996 )
 #endif
 
-const int ns = 5;
-//const int nx = 1920;
-//const int ny = 1080;
-
-const int nx = 200;
-const int ny = 100;
 
 
 #define min(a,b) \
@@ -85,29 +80,20 @@ int main()
 			return 1;
 		}
 
-		/*
-		struct camera cam = {
-			.lowerLeftCorner = (vec3){.x = { -2.0, -1.0, -1.0} },
-			.hori = (vec3){.x = { 4.0, 0.0, 0.0} },
-			.vert = (vec3){.x = { 0.0, 2.0, 0.0} },
-			.origin = (vec3){.x = { 0.0, 0.0, 0.0} }
-		};*/
-		/*
-		struct camera cam = newCamByBasis(
-			(vec3) {.x = { 0.0, 0.0, 0.0 }},
-			(vec3) {.x = { 4.0, 0.0, 0.0 }},
-			(vec3) {.x = { 0.0, 2.0, 0.0 }},
-			-1.0f
-		);*/
-
-		struct  camera cam = newCam((vec3) { .x = { 0.0, 0.0, 0.0 } }, (vec3) { .x = { sin(r), 0.0, -cos(r) } });
+		struct  camera cam = newCam(
+			(vec3) { .x = { 2 * sin(r), sin(r) + 2, 2 * cos(r)} },
+			(vec3) { .x = {  0.0, 0.0, 0.0 } },
+			(vec3) { { 0.0, 1.0, 0.0 } },
+			90.0f,
+			(float)nx / (float)ny
+		);
 
 
 		//make world
-		struct sphere s0 = { .center = (vec3){.x = {0, 0, -1}},		 .radius = 0.5,	.materialType = LAMBERTIAN,	.albedo = (vec3){.x = {0.8, 0.3, 0.3}} };
-		struct sphere s1 = { .center = (vec3){.x = {0, -100.5, -1}}, .radius = 100,	.materialType = LAMBERTIAN,	.albedo = (vec3){.x = {0.8, 0.8, 0.0}} };
-		struct sphere s2 = { .center = (vec3){.x = {1, 0, -1}},		 .radius = 0.5, .materialType = METAL,		.albedo = (vec3){.x = {0.8, 0.6, 0.2}} };
-		struct sphere s3 = { .center = (vec3){.x = {-1, 0, -1}},	 .radius = 0.5,	.materialType = METAL,		.albedo = (vec3){.x = {0.8, 0.8, 0.8}} };
+		struct sphere s0 = { .center = (vec3){.x = {0,  0,      0}}, .radius = 0.5, .materialType = LAMBERTIAN,	.albedo = (vec3){.x = {0.8, 0.3, 0.3}} };
+		struct sphere s1 = { .center = (vec3){.x = {0,  -100.5, 0}}, .radius = 100, .materialType = LAMBERTIAN,	.albedo = (vec3){.x = {0.8, 0.8, 0.0}} };
+		struct sphere s2 = { .center = (vec3){.x = {1,  0,      0}}, .radius = 0.5, .materialType = METAL,		.albedo = (vec3){.x = {0.8, 0.6, 0.2}} };
+		struct sphere s3 = { .center = (vec3){.x = {-1, 0,      0}}, .radius = 0.5, .materialType = METAL,		.albedo = (vec3){.x = {0.8, 0.8, 0.8}} };
 		struct sphere* list[4] = {
 			&s0, &s1, &s2, &s3
 		};
