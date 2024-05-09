@@ -50,6 +50,13 @@ bool refract(vec3 v, vec3 n, float indexRatio, vec3* refracted)
 	return refract;
 }
 
+float schlick(float cosine, float refIndex)
+{
+	float r0 = (1.0f - refIndex) / (1.0f + refIndex);
+	float r1 = r0 * r0;
+	return r1 + (1.0f - r1) * pow((1.0f - cosine), 5);
+}
+
 
 struct materialReturn lambertian(ray* in, struct hitRecord* rec)
 {
@@ -95,23 +102,28 @@ struct materialReturn dielectric(ray* in, struct hitRecord* rec)
 
 	float refIndex = rec->material.refIndex;
 
-	vec3 outwordNormal;
 	vec3 reflected = reflect(in->direction, rec->normal);
-	float indexRatio;
-
 	vec3 refracted;
 
 	output.atten = (vec3){ { 1.0, 1.0, 1.0 } };
 
-	bool isReflect = dotVec3(in->direction, rec->normal) > 0;
-	outwordNormal = isReflect ? subVec3(nullVec3, rec->normal) : rec->normal;
-	indexRatio    = isReflect ? refIndex : 1.0f / refIndex;
+	float refDot = dotVec3(in->direction, rec->normal);
+	bool isReflect = refDot > 0;
+	vec3  outwordNormal = isReflect ? subVec3(nullVec3, rec->normal) : rec->normal;
+	float indexRatio    = isReflect ? refIndex : 1.0f / refIndex;
+	float cosine        = isReflect ? 
+		refIndex * refDot / length(in->direction) :
+		          -refDot / length(in->direction) ;
 
 	bool isRefract = refract(in->direction, outwordNormal, indexRatio, &refracted);
+	float reflectProb = isRefract ? schlick(cosine, refIndex) : 1.0f;
+
 	output.scattered = (ray){
 		.origin = rec->p,
-		.direction = isRefract ? refracted : reflected
+		.direction = drand48() < reflectProb ? reflected : refracted
 	};
+
+	output.bounce = true;
 
 	return output;
 }

@@ -48,22 +48,36 @@ int main()
 			return 1;
 		}
 
-		struct  camera cam = newCam(
-			(vec3) { .x = { 2 * sin(r), 0.0f, 2 * cos(r)} },
-			(vec3) { .x = {  0.0, 0.0, 0.0 } },
-			(vec3) { { 0.0, 1.0, 0.0 } },
+		vec3 camPos = vec(2 * sin(r), sin(r) + 1, 2 * cos(r));
+		
+		struct camera cam = newCam(
+			camPos,
+			vec(0.0, 0.0, 0.0),
+			vec(0.0, 1.0, 0.0),
 			90.0f,
 			(float)nx / (float)ny
 		);
+
+		/*
+		struct  camera cam = newCam(
+			(vec3) {.x = { 0.0, 0.0, -1.0 }},
+			(vec3) {.x = { 0.0, 0.0, 0.0 }},
+			(vec3) { { 0.0, 1.0, 0.0 }},
+			90.0f,
+			(float)nx / (float)ny
+		);*/
 
 
 		//make world
 		struct sphere s0 = { .center = (vec3){.x = {0,  0,      0}}, .radius = 0.5, .material = { .type = LAMBERTIAN,	.albedo = (vec3){.x = {0.8, 0.3, 0.3}} } };
 		struct sphere s1 = { .center = (vec3){.x = {0,  -100.5, 0}}, .radius = 100, .material = { .type = LAMBERTIAN,	.albedo = (vec3){.x = {0.8, 0.8, 0.0}} } };
 		struct sphere s2 = { .center = (vec3){.x = {1,  0,      0}}, .radius = 0.5, .material = { .type = DIELECTRIC,	.albedo = (vec3){.x = {0.8, 0.6, 0.2}}, .refIndex = 1.5} };
-		struct sphere s3 = { .center = (vec3){.x = {-1, 0,      0}}, .radius = 0.5, .material = { .type = METAL,		.albedo = (vec3){.x = {0.8, 0.8, 0.8}}, .fuzz = 1.0} };
-		struct sphere* list[4] = {
-			&s0, &s1, &s2, &s3
+		struct sphere s3 = { .center = (vec3){.x = {-1, 0,      0}}, .radius = 0.5, .material = { .type = METAL,		.albedo = (vec3){.x = {0.8, 0.8, 0.8}}, .fuzz = 0.1} };
+	
+		struct sphere s4 = { .center = addVec3(camPos, mulVec3I(cam.w, 0.55)), .radius = 0.5, .material = {.type = METAL, .albedo = vec(0.1, 0.1, 0.1), .fuzz = 0.7} };
+
+		struct sphere* list[5] = {
+			&s0, &s1, &s2, &s3, &s4
 		};
 
 		struct world w = { list, (sizeof(list) / sizeof(struct sphere*)) };

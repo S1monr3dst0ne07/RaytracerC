@@ -25,6 +25,8 @@ struct camera newCam(vec3 origin, vec3 destination, vec3 vup, float vfov, float 
 	u = unit(cross(vup, w));
 	v = cross(w, u);
 
+	cam.w = w;
+
 	vec3 uWidth  = mulVec3I(u, halfWidth);
 	vec3 vHeight = mulVec3I(v, halfHeight);
 

@@ -7,6 +7,7 @@ typedef struct
 } vec3;
 
 void printVec3(vec3 v);
+vec3 vec(float x, float y, float z);
 
 #define nullVec3 ((vec3){ .x = {0, 0, 0} })
 #define fillVec3(y) ((vec3){ .x = {y, y, y} })

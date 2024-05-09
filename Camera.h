@@ -10,6 +10,8 @@ struct camera
 	vec3 hori;
 	vec3 vert;
 	vec3 origin;
+
+	vec3 w;
 };
 
 struct camera newCam(vec3 origin, vec3 destination, vec3 vup, float vfov, float aspect);

@@ -61,7 +61,7 @@ vec3 color(ray* r, struct world* w, int depth)
 
 		}
 
-		if (depth < 3 && mR.bounce)
+		if (depth < 50 && mR.bounce)
 		{
 			vec3 bounceColor = color(&mR.scattered, w, depth + 1);
 			output = mulVec3(mR.atten, bounceColor);
