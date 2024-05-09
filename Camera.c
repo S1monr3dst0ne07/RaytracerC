@@ -22,7 +22,6 @@ struct camera newCam(vec3 origin, vec3 destination, vec3 vup, float vfov, float 
 	cam.origin = origin;
 
 	w = unit(subVec3(origin, destination));
-	printVec3(w);
 	u = unit(cross(vup, w));
 	v = cross(w, u);
 
@@ -47,7 +46,7 @@ ray getRay(struct camera* c, float u, float v)
 	vec3 vVert = mulVec3I(c->vert, v);
 
 	vec3 dir = subVec3(addVec3(addVec3(uHori, vVert), c->lowerLeftCorner), c->origin);
-	ray r = { .A = c->origin, .B = dir };
+	ray r = { .origin = c->origin, .direction = dir };
 
 	return r;
 }

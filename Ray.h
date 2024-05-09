@@ -6,13 +6,11 @@
 
 typedef struct
 {
-	vec3 A;
-	vec3 B;
+	vec3 origin;
+	vec3 direction;
 
 } ray;
 
-
-//ray* newRay(vec3 A, vec3 B);
 
 vec3 pap(ray* r, float t);
 
