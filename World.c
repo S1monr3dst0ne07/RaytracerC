@@ -22,9 +22,11 @@ struct world newDemoWorld()
 		.size = 0
 	};
 
+	//floor
+	spheres[w.size++] = newSphere(vec(0, -(floorSphereSize + 0.5), 0), floorSphereSize, (struct materialProperty) { .type = LAMBERTIAN, .albedo = (vec3){._ = {0.5, 0.5, 0.5}}, .fuzz = 0.1f });
+
 	spheres[w.size++] = newSphere(vec( 0,  0,     0), 0.5, (struct materialProperty) { .type = LAMBERTIAN, .albedo = (vec3){ ._ = {0.8, 0.3, 0.3} }, .fuzz     = 1.0f });
-	spheres[w.size++] = newSphere(vec( 0, -100.5, 0), 100, (struct materialProperty) { .type = LAMBERTIAN, .albedo = (vec3){ ._ = {0.5, 0.5, 0.5} }, .fuzz     = 0.1f });
-	spheres[w.size++] = newSphere(vec( 1,  0,     0), 0.5, (struct materialProperty) { .type = DIELECTRIC, .albedo = (vec3){ ._ = {0.8, 0.6, 0.2} }, .refIndex = 1.5 });
+	spheres[w.size++] = newSphere(vec( 1,  0,     0), 0.5, (struct materialProperty) { .type = DIELECTRIC, .albedo = (vec3){ ._ = {1.0, 1.0, 1.0} }, .refIndex = 1.5 });
 	spheres[w.size++] = newSphere(vec(-1,  0,     0), 0.5, (struct materialProperty) { .type = METAL,      .albedo = (vec3){ ._ = {0.8, 0.8, 0.0} }, .fuzz     = 0.05f });
 
 	//camera
@@ -54,35 +56,37 @@ void updateCameraSphere(struct world* w, struct camera cam)
 
 #define rLAM (drand48() * drand48())
 #define rMET (0.5 * (1 + drand48()))
+#define rDIE (drand48() / 10.0f + 0.9f)
 
 
 void addRandomSpheres(struct world* w)
 {
 
 
-	for (int a = -11; a < 11; a++)
-	for (int b = -11; b < 11; b++)
+	for (int a = -(demox/2); a < (demox/2); a++)
+	for (int b = -(demoy/2); b < (demoy/2); b++)
 	{
-		float chooseMaterial = drand48();
-		vec3 center = vec(a+0.9*drand48(), 0.2, b+0.9*drand48());
-		if (length(subVec3(center, vec(4, 0.2, 0))) <= 0.9) continue;
 
-		if (chooseMaterial < 0.8) //diffuse
+		vec3 center = vec(a+0.9*drand48(), -0.3, b+0.9*drand48());
+		if (length(vec(a, 0.0f, b)) < 2) continue;
+
+		float chooseMaterial = drand48();
+		if (chooseMaterial < 0.6) //diffuse
 			w->list[w->size++] = newSphere(center, 0.2, (struct materialProperty) {
 				.type = LAMBERTIAN,
 				.albedo = vec(rLAM, rLAM, rLAM),
-				.fuzz = 0.0f
+				.fuzz = 1.0f
 			});
-		else if (chooseMaterial < 0.96) //metal
+		else if (chooseMaterial < 0.75) //metal
 			w->list[w->size++] = newSphere(center, 0.2, (struct materialProperty) {
 				.type = METAL,
 				.albedo = vec(rMET, rMET, rMET),
 				.fuzz = 0.5f * drand48()
 			});
-		else
+		else //dieletric
 			w->list[w->size++] = newSphere(center, 0.2, (struct materialProperty) {
 				.type = DIELECTRIC,
-				.albedo = vec(drand48(), drand48(), drand48()),
+				.albedo = vec(rDIE, rDIE, rDIE),
 				.refIndex = 1.5f
 			});
 

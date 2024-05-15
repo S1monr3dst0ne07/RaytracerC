@@ -81,7 +81,8 @@ struct materialReturn dielectric(ray* in, struct hitRecord* rec)
 	vec3 reflected = reflect(in->direction, rec->normal);
 	vec3 refracted;
 
-	output.atten = vec(1.0, 1.0, 1.0);
+	//output.atten = vec(1.0, 1.0, 1.0);
+	output.atten = rec->material.albedo;
 
 	float refDot = dotVec3(in->direction, rec->normal);
 	bool isReflect = refDot > 0;

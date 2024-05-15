@@ -61,7 +61,7 @@ int main()
 			vec(0.0, 1.0, 0.0),
 			90.0f,
 			(float)nx / (float)ny,
-			0.01f,
+			0.02f,
 			//length(camPos)
 			2.0f
 		);
