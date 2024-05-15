@@ -3,14 +3,18 @@
 
 typedef struct
 {
-	float x[3];
+	union
+	{
+		struct { float x, y, z; };
+		float _[3];
+	};
 } vec3;
 
 void printVec3(vec3 v);
 vec3 vec(float x, float y, float z);
 
-#define nullVec3 ((vec3){ .x = {0, 0, 0} })
-#define fillVec3(y) ((vec3){ .x = {y, y, y} })
+#define nullVec3 ((vec3){ ._ = {0, 0, 0} })
+#define fillVec3(y) ((vec3){ ._ = {y, y, y} })
 
 vec3 addVec3(vec3 v0, vec3 v1);
 vec3 subVec3(vec3 v0, vec3 v1);

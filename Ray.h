@@ -12,6 +12,6 @@ typedef struct
 } ray;
 
 
-vec3 pap(ray* r, float t);
+vec3 trace(ray* r, float t);
 
 #endif

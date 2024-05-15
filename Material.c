@@ -3,30 +3,6 @@
 #include <stdio.h>
 #include "Material.h"
 
-float randAbs1()
-{
-	return rand() / (float)RAND_MAX;
-}
-
-float randTot1()
-{
-	return randAbs1() * 2 - 1;
-}
-
-vec3 randomInUnitSphere()
-{
-	vec3 p = nullVec3;
-	do
-	{
-		p = (vec3){.x = {
-			randTot1(),
-			randTot1(),
-			randTot1(),
-		}};
-
-	} while (length(p) >= 1.0 && false);
-	return p;
-}
 
 
 
@@ -62,7 +38,7 @@ struct materialReturn lambertian(ray* in, struct hitRecord* rec)
 {
 	struct materialReturn output;
 
-	vec3 rand = randomInUnitSphere();
+	vec3 rand = mulVec3I(randomInUnitSphere(), rec->material.fuzz);
 	vec3 target = addVec3(rec->normal, rand);
 
 	output.scattered = (ray){ 
@@ -105,7 +81,7 @@ struct materialReturn dielectric(ray* in, struct hitRecord* rec)
 	vec3 reflected = reflect(in->direction, rec->normal);
 	vec3 refracted;
 
-	output.atten = (vec3){ { 1.0, 1.0, 1.0 } };
+	output.atten = vec(1.0, 1.0, 1.0);
 
 	float refDot = dotVec3(in->direction, rec->normal);
 	bool isReflect = refDot > 0;
@@ -115,6 +91,7 @@ struct materialReturn dielectric(ray* in, struct hitRecord* rec)
 		refIndex * refDot / length(in->direction) :
 		          -refDot / length(in->direction) ;
 
+	//schlick(cosine, refIndex)
 	bool isRefract = refract(in->direction, outwordNormal, indexRatio, &refracted);
 	float reflectProb = isRefract ? schlick(cosine, refIndex) : 1.0f;
 

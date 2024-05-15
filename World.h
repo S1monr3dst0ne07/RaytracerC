@@ -5,6 +5,7 @@
 
 #include "Ray.h"
 #include "Properties.h"
+#include "Camera.h"
 
 struct world
 {
@@ -21,6 +22,10 @@ struct hitRecord
 
 	struct materialProperty material;
 };
+
+struct world newDemoWorld();
+void addRandomSpheres(struct world* w);
+void updateCameraSphere(struct world* w, struct camera cam);
 
 bool worldHit(struct world* w, ray* r, float tMin, float tMax, struct hitRecord* rec);
 vec3 color(ray* r, struct world* w, int depth);

@@ -7,6 +7,16 @@
 #include <stdio.h>
 
 
+struct sphere* newSphere(vec3 center, float radius, struct materialProperty material)
+{
+	struct sphere* s = malloc(sizeof(struct sphere));
+	s->center = center;
+	s->radius = radius;
+	s->material = material;
+	s->isCamera = false;
+
+	return s;
+}
 
 
 bool sphereHit(struct sphere* s, ray* r, float tMin, float tMax, struct hitRecord* rec)
@@ -22,7 +32,7 @@ bool sphereHit(struct sphere* s, ray* r, float tMin, float tMax, struct hitRecor
 		if (temp < tMax && temp > tMin)
 		{
 			rec->t = temp;
-			rec->p = pap(r, rec->t);
+			rec->p = trace(r, rec->t);
 			rec->normal = divVec3I(subVec3(rec->p, s->center), s->radius);
 			//rec->albedo = s->albedo;
 			rec->material = s->material;
@@ -33,7 +43,7 @@ bool sphereHit(struct sphere* s, ray* r, float tMin, float tMax, struct hitRecor
 		if (temp < tMax && temp > tMin)
 		{
 			rec->t = temp;
-			rec->p = pap(r, rec->t);
+			rec->p = trace(r, rec->t);
 			rec->normal = divVec3I(subVec3(rec->p, s->center), s->radius);
 			//rec->albedo = s->albedo;
 			rec->material = s->material;
