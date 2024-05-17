@@ -1,13 +1,13 @@
 #ifndef SPHERE
 #define SPHERE
 
+#include <math.h>
+#include <stdbool.h>
+
 #include "Ray.h"
 #include "Material.h"
 #include "Properties.h"
 #include "World.h"
-
-#include <math.h>
-#include <stdbool.h>
 
 
 struct sphere

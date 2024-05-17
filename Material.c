@@ -1,6 +1,7 @@
-#include "Vec3.h"
 
 #include <stdio.h>
+
+#include "Vec3.h"
 #include "Material.h"
 
 

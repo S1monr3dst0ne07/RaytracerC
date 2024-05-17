@@ -7,14 +7,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-float randAbs1()
-{
-	return rand() / (float)RAND_MAX;
-}
+
 
 float randTot1()
 {
-	return randAbs1() * 2 - 1;
+	return drand48() * 2 - 1;
 }
 
 vec3 randomInUnitSphere()

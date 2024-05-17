@@ -53,17 +53,19 @@ int main()
 			return 1;
 		}
 
-		vec3 camPos = vec(2 * sin(r), sin(r) + 1, 2 * cos(r));
+		vec3 camPos = vec(5 * sin(r), 0.5, 5 * cos(r));
 		
+		vec3 destination = vec(0.0, 0.0, 0.0);
+		vec3 origin = camPos;
+
 		struct camera cam = newCam(
-			camPos,
-			vec(0.0, 0.0, 0.0),
+			origin,
+			destination,
 			vec(0.0, 1.0, 0.0),
 			90.0f,
 			(float)nx / (float)ny,
 			0.02f,
-			//length(camPos)
-			2.0f
+			length(subVec3(origin, destination))
 		);
 
 		updateCameraSphere(&w, cam);

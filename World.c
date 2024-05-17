@@ -107,6 +107,7 @@ bool worldHit(struct world* w, ray* r, float tMin, float tMax, struct hitRecord*
 	bool hasHit = false;
 	double currentClosest = tMax;
 
+
 	for (int i = 0; i < w->size; i++)
 	{
 		if (sphereHit(w->list[i], r, tMin, currentClosest, &tempRec))
@@ -164,8 +165,6 @@ vec3 color(ray* r, struct world* w, int depth)
 
 	return output;
 }
-
-
 
 
 

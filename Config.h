@@ -2,11 +2,11 @@
 #define HCONFIG
 
 #define ns 5
-//#define nx (1920)
-//#define ny (1200)
+#define nx (1920)
+#define ny (1080)
 
-#define nx 900
-#define ny 600
+//#define nx 900
+//#define ny 600
 
 
 #define demox 10

@@ -1,7 +1,7 @@
 TARGET = main
 LIBS = -lm
 CC = gcc
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -Ofast
 
 .PHONY: default all clean
 
@@ -10,6 +10,9 @@ all: default
 
 run: default
 	./main
+
+dump: default
+	objdump -S $(TARGET) > main.asm
 
 render: clean_imgs run wait convert
 
