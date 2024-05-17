@@ -35,14 +35,14 @@ float schlick(float cosine, float refIndex)
 }
 
 
-struct materialReturn lambertian(ray* in, struct hitRecord* rec)
+struct materialReturn lambertian(struct ray* in, struct hitRecord* rec)
 {
 	struct materialReturn output;
 
 	vec3 rand = mulVec3I(randomInUnitSphere(), rec->material.fuzz);
 	vec3 target = addVec3(rec->normal, rand);
 
-	output.scattered = (ray){ 
+	output.scattered = (struct ray){
 		.origin    = addVec3I(rec->p, 0), 
 		.direction = addVec3I(target, 0)
 	};
@@ -53,7 +53,7 @@ struct materialReturn lambertian(ray* in, struct hitRecord* rec)
 }
 
 
-struct materialReturn metal(ray* in, struct hitRecord* rec)
+struct materialReturn metal(struct ray* in, struct hitRecord* rec)
 {
 	struct materialReturn output;
 
@@ -62,7 +62,7 @@ struct materialReturn metal(ray* in, struct hitRecord* rec)
 	vec3 unitDir = unit(in->direction);
 	vec3 reflected = reflect(unitDir, rec->normal);
 
-	output.scattered = (ray){
+	output.scattered = (struct ray){
 		.origin = rec->p,
 		.direction = addVec3(reflected, mulVec3I(randomInUnitSphere(), fuzz))
 	};
@@ -73,7 +73,7 @@ struct materialReturn metal(ray* in, struct hitRecord* rec)
 }
 
 
-struct materialReturn dielectric(ray* in, struct hitRecord* rec)
+struct materialReturn dielectric(struct ray* in, struct hitRecord* rec)
 {
 	struct materialReturn output;
 
@@ -97,7 +97,7 @@ struct materialReturn dielectric(ray* in, struct hitRecord* rec)
 	bool isRefract = refract(in->direction, outwordNormal, indexRatio, &refracted);
 	float reflectProb = isRefract ? schlick(cosine, refIndex) : 1.0f;
 
-	output.scattered = (ray){
+	output.scattered = (struct ray){
 		.origin = rec->p,
 		.direction = drand48() < reflectProb ? reflected : refracted
 	};

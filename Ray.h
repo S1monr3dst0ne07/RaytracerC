@@ -6,17 +6,17 @@
 #include "Vec3.h"
 #include "Camera.h"
 
-typedef struct
+struct ray
 {
 	vec3 origin;
 	vec3 direction;
 
-	vec3 direction2;
+	float dot;
 
-} ray;
+};
 
 
-vec3 trace(ray* r, float t);
-ray getRay(struct camera* c, float u, float v);
+vec3 trace(struct ray* r, float t);
+struct ray getRay(struct camera* c, float u, float v);
 
 #endif

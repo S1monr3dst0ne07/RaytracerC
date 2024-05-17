@@ -19,10 +19,11 @@ struct sphere* newSphere(vec3 center, float radius, struct materialProperty mate
 }
 
 
-bool sphereHit(struct sphere* s, ray* r, float tMin, float tMax, struct hitRecord* rec)
+bool sphereHit(struct sphere* s, struct ray* r, float tMin, float tMax, struct hitRecord* rec)
 {
 	vec3 oc = subVec3(r->origin, s->center);
-	float a = dotVec3(r->direction, r->direction);
+	//float a = dotVec3(r->direction, r->direction);
+	float a = r->dot;
 	float b = dotVec3(oc, r->direction);
 	float c = dotVec3(oc, oc) - s->radius * s->radius;
 	float discr = b * b - a * c;

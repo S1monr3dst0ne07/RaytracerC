@@ -27,7 +27,7 @@ struct world newDemoWorld();
 void addRandomSpheres(struct world* w);
 void updateCameraSphere(struct world* w, struct camera cam);
 
-bool worldHit(struct world* w, ray* r, float tMin, float tMax, struct hitRecord* rec);
-vec3 color(ray* r, struct world* w, int depth);
+bool worldHit(struct world* w, struct ray* r, float tMin, float tMax, struct hitRecord* rec);
+vec3 color(struct ray* r, struct world* w, int depth);
 
 #endif

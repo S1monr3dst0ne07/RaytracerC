@@ -25,7 +25,7 @@ struct materialProperty
 struct materialReturn
 {
 	vec3 atten;
-	ray scattered;
+	struct ray scattered;
 	bool bounce;
 
 };

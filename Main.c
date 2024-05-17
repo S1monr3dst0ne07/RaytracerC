@@ -93,7 +93,7 @@ int main()
 					float u = (float)(i + rand() / (float)RAND_MAX) / (float)nx;
 					float v = (float)(j + rand() / (float)RAND_MAX) / (float)ny;
 
-					ray r = getRay(&cam, u, v);
+					struct ray r = getRay(&cam, u, v);
 					col = addVec3(color(&r, &w, 0), col);
 
 				}

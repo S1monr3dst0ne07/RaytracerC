@@ -98,7 +98,7 @@ void addRandomSpheres(struct world* w)
 
 
 
-bool worldHit(struct world* w, ray* r, float tMin, float tMax, struct hitRecord* rec)
+bool worldHit(struct world* w, struct ray* r, float tMin, float tMax, struct hitRecord* rec)
 {
 	struct hitRecord tempRec;
 	tempRec.normal = nullVec3;
@@ -133,7 +133,7 @@ bool worldHit(struct world* w, ray* r, float tMin, float tMax, struct hitRecord*
 }
 
 
-vec3 color(ray* r, struct world* w, int depth)
+vec3 color(struct ray* r, struct world* w, int depth)
 {
 	vec3 output = vec(0.5f, 0.7f, 1.0f);
 	struct hitRecord rec;
@@ -146,7 +146,7 @@ vec3 color(ray* r, struct world* w, int depth)
 		struct materialReturn mR;
 		mR.bounce = false;
 		mR.atten = nullVec3;
-		mR.scattered = (ray){ .origin = nullVec3, .direction = nullVec3 };
+		mR.scattered = (struct ray){.origin = nullVec3, .direction = nullVec3};
 
 		switch (rec.material.type)
 		{

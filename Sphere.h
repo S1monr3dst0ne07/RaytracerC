@@ -21,6 +21,6 @@ struct sphere
 };
 
 struct sphere* newSphere(vec3 center, float radius, struct materialProperty material);
-bool sphereHit(struct sphere* s, ray* r, float tMin, float tMax, struct hitRecord* rec);
+bool sphereHit(struct sphere* s, struct ray* r, float tMin, float tMax, struct hitRecord* rec);
 
 #endif
